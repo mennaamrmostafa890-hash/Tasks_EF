@@ -1,17 +1,20 @@
-namespace WinFormsApp3
+﻿using EF2_ITI.Data;
+
+namespace EF2_ITI
 {
-    internal static class Program
+    internal class Program
     {
-        /// <summary>
-        ///  The main entry point for the application.
-        /// </summary>
-        [STAThread]
-        static void Main()
+        static void Main(string[] args)
         {
-            // To customize application configuration such as set high DPI settings or default font,
-            // see https://aka.ms/applicationconfiguration.
-            ApplicationConfiguration.Initialize();
-            Application.Run(new Form1());
+            using (ITIContext db = new ITIContext())
+            {
+                var res = db.Departments.ToList();
+                foreach (var item in res)
+                {
+                    Console.WriteLine($"{item.Id}) {item.Dept_Name} " +
+                        $", Capacity {item.Capacity}");
+                }
+            }
         }
     }
 }
